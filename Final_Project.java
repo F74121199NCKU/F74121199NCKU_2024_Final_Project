@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.security.Identity;
 import java.util.Scanner;
@@ -6,17 +5,17 @@ import java.util.Scanner;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-public class Final_Project {
+public class test {
     public static final int CLASS_NUM = 68;
     public static final int INFORMATION_NUM = 8;
 
     public static void main(String[] args) {
         try {
             // 以外文選修為例子
-            Document doc = Jsoup.connect("https://course.ncku.edu.tw/index.php?c=qry11215&i=C2FVOlE2UGxXfFZyAD0HZlRoASJUOgImATtTOgVuVmBYPlMxVzgDIlZrUTENOQYiBmMCJ105UGYEPQdiCjoDKQlrAW4Ka1FnUDBXOwRiUDpSZQE6BnpaLwY9UmUAawUjVGcDMgAkVXNVDQc4CWhSdlxhC38MaVYzBTxTJgdMA2MLIlU7UX9QP1c9VjMANgdlVGkBYVRpAjUBOlMoBSdWaFg5Uz1XIQMiVjRRcQ1cBm4GbwInXTlQdAQ9B2IKNANoCSABdAo7UTJQdFd3BGZQZVI6ASAGJlppBjdSYgB2BSFUYgM5ADBVJ1V1B2MJPlJtXH0LLgxoVnwFe1N3BzcDYws6VSJRcFB0VzxWYAA9B2RUaAF7VDoCPgEwU2gFPVZoWD9TPFdqA2tWYFE7DWoGOgYyAjVdMlA8BG4HagoyA2kJawFuCmtRZlAyVzsEflBzUm4BMQY7Wn4GYFJwAGoFY1Q5A2cAb1V6").get();
+            Document doc = Jsoup.connect("https://course.ncku.edu.tw/index.php?c=qry11215&i=WzFSPVYxVGhXfFZyUG1QMQU5Di0AblRwAjheNwBrCjwCZAlrVjlRcAQ5BmYIPAUhUjcCJw5qVWMFPAJnUGBcdgFjAm0AYQQyA2NWOlYwBW9UYwgzUCxRJAY9X2hWPQMlV2RQYVB0BSMEXAQ7CGkMKF1gC38BZFYzBTwHclQfUzNbclI8VnhUO1c9VjNQZlAyBTgObgA9VGMCOV4lACIKNAJjCWdWIFFwBGYGJghZBW1SOwInDmpVcQU8AmdQblw3ASgCdwAxBGcDJ1Z2VjQFMFQ8CClQcFFiBjdfb1YgAydXYVBqUGAFdwQkBGAIPwwzXXwLLgFlVnwFewcjVGRTM1tqUiVWd1RwVzxWYFBtUDMFOQ50AG5UaAIzXmUAOAo0AmUJZlZrUTkEMgZsCG8FOVJmAjUOYVU5BW8Cb1BoXDYBYwJtAGEEMwNhVjpWLAUmVGgIOFBtUXUGYF99VjwDZVc6UDRQPwUq").get();
             String content = doc.text(); // 獲取內容
             content = content.substring(content.indexOf("'599'") + 5);
-
+            
             SelectClass selectClass = new SelectClass();
             StringBuilder classIndex = new StringBuilder(); // 共有8個重要的資訊
             classIndex.append("系號-序號").append("科目名稱").append("限選條件").append("學分").append("教師姓名").append("已選課人數/餘額").append("時間").append("教室");
@@ -43,13 +42,14 @@ public class Final_Project {
                     System.out.print(e + " ");
                 }
                 System.out.println("");*/
+
             }
             Scanner sc = new Scanner(System.in, "UTF-8");
             String choose;
             do {
                 System.out.println("Which function do you want to use ? ");
                 System.out.println("(0)left、(1) searchByIDRange、(2) searchByName、(3) searchByDay、(4)searchByClass、(5)displayAll、(6)checkStudentAmount");
-                System.out.println("(7)selectClass、(8)checkTeacher、(9)showClassSelected、(10)checkDayAndTime、(11)checkPlaceForClass、(12)rateClass、(13)checkAverageRate");
+                System.out.println("(7)selectClass、(8)checkTeacher、(9)showClassSelected、(10)checkDayAndTime、(11)checkPlaceForClass、(12)rateClass、(13)checkAverageRate、(14)commentOnClass、(15)checkComments");
                 choose = sc.nextLine();
 
                 switch (choose) {
@@ -90,7 +90,7 @@ public class Final_Project {
                         System.out.println("Please enter the ID of the class you want to select");
                         String IDforSelect = sc.nextLine();
                         if(selectClass.checkClassReapeat(classInformation)&&selectClass.checkTimeConflict(classInformation, IDforSelect)){ //判斷有無重複課程或時間
-                            selectClass.storeClass(classInformation, IDforSelect);
+                            selectClass.storeClassID(classInformation, IDforSelect);
                         }
                         break;
                     case "8":
@@ -121,7 +121,16 @@ public class Final_Project {
                         String IDforAverage = sc.nextLine();
                         rateClass.checkRateAverage(classInformation, IDforAverage);
                         break;
-
+                    case "14":
+                    System.out.println("Please enter the ID to comment");
+                    String IDforComment = sc.nextLine();
+                    rateClass.comment(classInformation, IDforComment);
+                    break;
+                    case "15":
+                    System.out.println("Please enter the ID to check comment");    
+                    String IDforCheckComment = sc.nextLine();   
+                    rateClass.checkComment(classInformation, IDforCheckComment); 
+                    break;
                     default:
                         System.out.println("The function does not exist.\nPlease enter again.");
                         break;
@@ -307,5 +316,9 @@ public class Final_Project {
             }
         }
     }    
+    //可使用多個條件查詢
+    public static void multipleSearch(){
+        
+    }
     //還需要添加功能
 }
