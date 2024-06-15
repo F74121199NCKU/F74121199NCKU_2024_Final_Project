@@ -122,15 +122,15 @@ public class Final_Project {
                         rateClass.checkRateAverage(classInformation, IDforAverage);
                         break;
                     case "14":
-                    System.out.println("Please enter the ID to comment");
-                    String IDforComment = sc.nextLine();
-                    rateClass.comment(classInformation, IDforComment);
-                    break;
+                        System.out.println("Please enter the ID to comment");
+                        String IDforComment = sc.nextLine();
+                        rateClass.comment(classInformation, IDforComment);
+                        break;
                     case "15":
-                    System.out.println("Please enter the ID to check comment");    
-                    String IDforCheckComment = sc.nextLine();   
-                    rateClass.checkComment(classInformation, IDforCheckComment); 
-                    break;
+                        System.out.println("Please enter the ID to check comment");    
+                        String IDforCheckComment = sc.nextLine();   
+                        rateClass.checkComment(classInformation, IDforCheckComment); 
+                        break;
                     default:
                         System.out.println("The function does not exist.\nPlease enter again.");
                         break;
