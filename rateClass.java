@@ -120,7 +120,7 @@ public class rateClass {
                         }else {
                             arrayList.add(comment);
                         }
-                        System.out.println(comments);
+                        //System.out.println(comments);
                         return;
 
                     }while(!comment.equals("0"));

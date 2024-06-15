@@ -5,14 +5,14 @@ import java.util.Scanner;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-public class test {
+public class Final_Project {
     public static final int CLASS_NUM = 68;
     public static final int INFORMATION_NUM = 8;
 
     public static void main(String[] args) {
         try {
             // 以外文選修為例子
-            Document doc = Jsoup.connect("https://course.ncku.edu.tw/index.php?c=qry11215&i=WzFSPVYxVGhXfFZyUG1QMQU5Di0AblRwAjheNwBrCjwCZAlrVjlRcAQ5BmYIPAUhUjcCJw5qVWMFPAJnUGBcdgFjAm0AYQQyA2NWOlYwBW9UYwgzUCxRJAY9X2hWPQMlV2RQYVB0BSMEXAQ7CGkMKF1gC38BZFYzBTwHclQfUzNbclI8VnhUO1c9VjNQZlAyBTgObgA9VGMCOV4lACIKNAJjCWdWIFFwBGYGJghZBW1SOwInDmpVcQU8AmdQblw3ASgCdwAxBGcDJ1Z2VjQFMFQ8CClQcFFiBjdfb1YgAydXYVBqUGAFdwQkBGAIPwwzXXwLLgFlVnwFewcjVGRTM1tqUiVWd1RwVzxWYFBtUDMFOQ50AG5UaAIzXmUAOAo0AmUJZlZrUTkEMgZsCG8FOVJmAjUOYVU5BW8Cb1BoXDYBYwJtAGEEMwNhVjpWLAUmVGgIOFBtUXUGYF99VjwDZVc6UDRQPwUq").get();
+            Document doc = Jsoup.connect("https://course.ncku.edu.tw/index.php?c=qry11215&i=DWgAMwIzUmpRL1YlADBYYwY0VHFbYlUiUTlRZlNoUmACMQ07BjUHcwlmBWEIZwApCjUDcAI7UWNSOFJoUWZVfAxhBjUDNFBiVGFUbwFqXGwIMVdqUHsDJQBpUDlcZ1JwVjAJbFUtCXpUXlVuVW9Telw7AyFTa1IzVD5VfwxAUjENKwAyAnpSOVFuVmQAO1hgBjVUMlsxVTFROFF0UyFSaAI2DTcGLAdzCTkFIQgCAGUKOQNwAjtRcVI4UmhRaFU9DCoGLwNkUDdUJVQjAW5cMwhuV3BQJwNjAGNQPlx6UnJWNQlnVTkJLlQmVTVVOVNhXCcDcFNqUnxUeVUuDDtSMQ0zACsCdVJyUW9WNwAwWGEGNFQoW2JVOlEyUTRTO1JoAjANNgZnBzoJbQVrCDQAMQpkA2ICMFE5UmtSYFFuVTwMYQY1AzRQY1RjVG8BdlwlCDpXYVA6A3QANFAsXGZSMFZuCTlVZglz").get();
             String content = doc.text(); // 獲取內容
             content = content.substring(content.indexOf("'599'") + 5);
             
@@ -48,8 +48,8 @@ public class test {
             String choose;
             do {
                 System.out.println("Which function do you want to use ? ");
-                System.out.println("(0)left、(1) searchByIDRange、(2) searchByName、(3) searchByDay、(4)searchByClass、(5)displayAll、(6)checkStudentAmount");
-                System.out.println("(7)selectClass、(8)checkTeacher、(9)showClassSelected、(10)checkDayAndTime、(11)checkPlaceForClass、(12)rateClass、(13)checkAverageRate、(14)commentOnClass、(15)checkComments");
+                System.out.println("(0)left、(1) searchByIDRange、(2) searchByName、(3) searchByDay、(4)searchByClass、(5)displayAll、(6)checkStudentAmount、(7)selectClass");
+                System.out.println("(8)checkTeacher、(9)showClassSelected、(10)checkDayAndTime、(11)checkPlaceForClass、(12)rateClass、(13)checkAverageRate、(14)commentOnClass、(15)checkComments");
                 choose = sc.nextLine();
 
                 switch (choose) {
@@ -90,7 +90,7 @@ public class test {
                         System.out.println("Please enter the ID of the class you want to select");
                         String IDforSelect = sc.nextLine();
                         if(selectClass.checkClassReapeat(classInformation)&&selectClass.checkTimeConflict(classInformation, IDforSelect)){ //判斷有無重複課程或時間
-                            selectClass.storeClassID(classInformation, IDforSelect);
+                            selectClass.storeClass(classInformation, IDforSelect);
                         }
                         break;
                     case "8":
@@ -316,9 +316,4 @@ public class test {
             }
         }
     }    
-    //可使用多個條件查詢
-    public static void multipleSearch(){
-        
-    }
-    //還需要添加功能
 }
