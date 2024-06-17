@@ -12,10 +12,10 @@ public class Final_Project {
     public static void main(String[] args) {
         try {
             // 以外文選修為例子
-            Document doc = Jsoup.connect("https://course.ncku.edu.tw/index.php?c=qry11215&i=DWgAMwIzUmpRL1YlADBYYwY0VHFbYlUiUTlRZlNoUmACMQ07BjUHcwlmBWEIZwApCjUDcAI7UWNSOFJoUWZVfAxhBjUDNFBiVGFUbwFqXGwIMVdqUHsDJQBpUDlcZ1JwVjAJbFUtCXpUXlVuVW9Telw7AyFTa1IzVD5VfwxAUjENKwAyAnpSOVFuVmQAO1hgBjVUMlsxVTFROFF0UyFSaAI2DTcGLAdzCTkFIQgCAGUKOQNwAjtRcVI4UmhRaFU9DCoGLwNkUDdUJVQjAW5cMwhuV3BQJwNjAGNQPlx6UnJWNQlnVTkJLlQmVTVVOVNhXCcDcFNqUnxUeVUuDDtSMQ0zACsCdVJyUW9WNwAwWGEGNFQoW2JVOlEyUTRTO1JoAjANNgZnBzoJbQVrCDQAMQpkA2ICMFE5UmtSYFFuVTwMYQY1AzRQY1RjVG8BdlwlCDpXYVA6A3QANFAsXGZSMFZuCTlVZglz").get();
+            Document doc = Jsoup.connect("https://course.ncku.edu.tw/index.php?c=qry11215&i=UGIPZQFlWz1RL1ZwAGpTYwdtUnMOZ1d2V2wEaQFtADBcPVRjCT9bJFEyCWxVOgElATAHIlc5BDcCPFFnVDsEKQ03AGoBYwhkU2YLZVdmU2hRMFRtXSYFdQI4BTZWOgAgXGgGYgh1XydQVlRuBT9bfwRtUiYEa1U1BzkBJ1JGA2RQIQ9kASxbblFuVjEAYVNgB2xSMA40V2VXbQR7ASQAOFw6VG8JJlskUW0JLFVfAWkBPAciVzkEJQI8UWdUNQRoDXwAcAEzCDFTIgspV2JTN1FvVHddegUzAjIFMVYnACJcbQZpCGFfc1AuVDUFaVtkBHFSdwRqVXoHfgF2Uj0DZFA5D30BI1slUW9WYgBqU2EHbVIqDmdXbldnBDsBPgA4XDxUbgltW21ROQlmVWkBPQFhBzBXMgRtAm9Rb1QzBGkNNwBqAWMIZVNkC2VXelMhUTtUZl1nBSQCZQUjVjsAYFw2BjcIPl8u").get();
             String content = doc.text(); // 獲取內容
             content = content.substring(content.indexOf("'599'") + 5);
-            
+
             SelectClass selectClass = new SelectClass();
             StringBuilder classIndex = new StringBuilder(); // 共有8個重要的資訊
             classIndex.append("系號-序號").append("科目名稱").append("限選條件").append("學分").append("教師姓名").append("已選課人數/餘額").append("時間").append("教室");
@@ -24,9 +24,13 @@ public class Final_Project {
             String[][] classInformation = new String[CLASS_NUM + 1][INFORMATION_NUM];// 68堂課，8個資訊
 
             for (int i = 1; i <= CLASS_NUM; i++) {
-                 //把中文轉成英文
-                //cutContent[i] = cutContent[i].replace("日文", "Japanese").replace("西班牙文", "Spanish").replace("法文", "Franch").replace("德文", "German").replace("韓文初級", "Junior-Korean").replace("越南語", "Vietnamese").replace("泰語", "Thai").replace("印尼語", "Indonesian");
-                //cutContent[i] = cutContent[i].replace("（）","()").replace("二", "two").replace("四", "four").replace("六", "six");
+                 //把中文轉成英文，中文會查詢錯誤
+                cutContent[i] = cutContent[i].replace("日文", "Japanese").replace("西班牙文", "Spanish").replace("法文", "Franch").replace("德文", "German").replace("韓文初級", "Junior-Korean").replace("越南語", "Vietnamese").replace("泰語", "Thai").replace("印尼語", "Indonesian");
+                cutContent[i] = cutContent[i].replace("日語生活會話", "Japanese_Life_Conversation").replace("日語閱讀", "Japanese_Reading");
+                cutContent[i] = cutContent[i].replace("（）","()").replace("一", "one").replace("三", "three").replace("五", "five");
+                cutContent[i] = cutContent[i].replace("井上智鶴","Jin-Shang-Zhi-He" ).replace("張巧螓","Zhang-Qiao-Qin" ).replace("朱戎梅","Zhu-rong-mei");
+                cutContent[i] = cutContent[i].replace("林蜀媛","lin-shu-yuan").replace("張淑慧","zhang-shu-hui").replace("白芳怡","bai-fang-yi").replace("蔡氏清水","cai-shi-qing-shui").replace("董莉","").replace("林綉玉","lin-xiu-yu").replace("尹遠菱","yin-yuan-ling");
+                cutContent[i] = cutContent[i].replace("唯農大樓","wei-nong");
                 cutLine[i] = cutContent[i].split(" ");
                 int count = 0;// 獲取了幾個資訊
                 for (int j = 0; j < cutLine[i].length; j++) { //確保 j 的範圍在 cutLine[i] 內
@@ -89,7 +93,7 @@ public class Final_Project {
                     case "7":
                         System.out.println("Please enter the ID of the class you want to select");
                         String IDforSelect = sc.nextLine();
-                        if(selectClass.checkClassReapeat(classInformation)&&selectClass.checkTimeConflict(classInformation, IDforSelect)){ //判斷有無重複課程或時間
+                        if(selectClass.checkClassReapeat(classInformation, IDforSelect)&&selectClass.checkTimeConflict(classInformation, IDforSelect)){ //判斷有無重複課程或時間
                             selectClass.storeClass(classInformation, IDforSelect);
                         }
                         break;
@@ -102,12 +106,12 @@ public class Final_Project {
                         selectClass.showClassSelected(classInformation);
                         break;
                     case "10":
-                        System.out.println("Please enter the ID to search day and time"); 
+                        System.out.println("Please enter the ID to search day and time");
                         String IDforDayAndTime = sc.nextLine();
                         checkDayAndTime(classInformation, IDforDayAndTime);
                         break;
                     case "11":
-                        System.out.println("Please enter the ID to search place for class"); 
+                        System.out.println("Please enter the ID to search place for class");
                         String IDforPlace = sc.nextLine();
                         checkPlaceForClass(classInformation, IDforPlace);
                         break;
@@ -127,14 +131,14 @@ public class Final_Project {
                         rateClass.comment(classInformation, IDforComment);
                         break;
                     case "15":
-                        System.out.println("Please enter the ID to check comment");    
-                        String IDforCheckComment = sc.nextLine();   
-                        rateClass.checkComment(classInformation, IDforCheckComment); 
+                        System.out.println("Please enter the ID to check comment");
+                        String IDforCheckComment = sc.nextLine();
+                        rateClass.checkComment(classInformation, IDforCheckComment);
                         break;
                     default:
                         System.out.println("The function does not exist.\nPlease enter again.");
                         break;
-                } 
+                }
             } while (!choose.equals("0"));
         }catch (Exception e) {
             e.printStackTrace(); // 打印異常信息
@@ -148,7 +152,7 @@ public class Final_Project {
                 return i;
             }
         }
-        System.out.println("The class does not exist");
+        //System.out.println("The class does not exist");
         return -1;
     }
     //1.提供範圍搜尋
@@ -219,40 +223,48 @@ public class Final_Project {
     }
     //6.用ID查選課人數和餘額
     public static void checkStudentAmount(String[][] classInformation , String ID){
-        for (int i = 1; i <= classInformation.length; i++) {
+        Boolean find = false; //判斷有沒有找到
+        for (int i = 1; i < classInformation.length; i++) {
             if (classInformation[i][0] != null && classInformation[i][0].equals(ID)) {
+                find = true;
                 String [] numberParts = classInformation[i][5].split("/");
                 System.out.println("People in this class:"+numberParts[0]);
                 System.out.println("Remaining places:"+numberParts[1]);
                 return;
             }
         }
+        if(!find) System.out.println("The class does not exist");
     }
     //7.檢查還有哪些課有餘額
     public static void checkForClassRemainPlaces(String[][] classInformation){
+        Boolean find = false;//判斷有沒有找到
         for (int i = 1; i <= classInformation.length; i++) {
             if (classInformation[i-1][0] != null) {
                 String [] numberParts = classInformation[i-1][5].split("/");
                 if (!numberParts[1].equals("0")) {
+                    find = true;
                     for (String e : classInformation[i-1]) {
                         System.out.print(e + " ");
                     }
                     System.out.println("");
-                }               
+                }
             }
         }
+        if(!find) System.out.println("The class does not exist");
         return;
     }
     //8.用ID查老師
     public static void checkTeacher(String[][] classInformation , String ID){
-        for (int i = 1; i <= classInformation.length; i++) {
+        Boolean find = false;//判斷有沒有找到
+        for (int i = 1; i < classInformation.length; i++) {
             if (classInformation[i][0] != null && classInformation[i][0].equals(ID)) {
-            
+                find = true;
                 System.out.println("Teacher:"+classInformation[i][4]);
-                
+
                 return;
             }
         }
+        if(!find) System.out.println("The class does not exist");
     }
     //10.用ID查星期幾、節數
     public static void checkDayAndTime(String[][] classInformation , String ID){
@@ -287,14 +299,14 @@ public class Final_Project {
                 if (parts[0].contains("5")) {
                     System.out.println("The class is on Friday");
                 }
-                
+
                 System.out.println("Time:"+parts[1]);
 
                 return;
             }
         }
-    } 
-    
+    }
+
     //11.用ID查上課地點
     public static void checkPlaceForClass(String[][] classInformation , String ID){
         int index = 0;//檢查是不是正常的ID
@@ -315,5 +327,5 @@ public class Final_Project {
                 return;
             }
         }
-    }    
+    }
 }

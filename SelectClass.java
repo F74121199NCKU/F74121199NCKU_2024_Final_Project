@@ -25,14 +25,14 @@ public class SelectClass {
                 break;
             }
         }
-        if(!find) { 
+        if(!find) {
             System.out.println("The ID is wrong");
             return ;
         }
     }
     //查看時間有無重複
     public boolean checkTimeConflict(String[][] classInformation, String ID){
-        int count = 0; 
+        int count = 0;
         for( count = 0; count < classInformation.length; count++){
             if(classInformation[count][0] != null && classInformation[count][0].equals(ID)){
                 break;
@@ -44,18 +44,26 @@ public class SelectClass {
         }else return true;
     }
     //查看課程有無重複
-    public boolean checkClassReapeat(String[][] classInformation){
-        for(int i = 0; i < classInformation.length; i++){
-            //ID重複
-            if(storeID.contains(classInformation[i][0])){
-                System.out.println("The class has been selected");
-                return false;
+    public boolean checkClassReapeat(String[][] classInformation, String ID){
+        int count = 0;
+        for( count = 0; count < classInformation.length; count++){
+            if(classInformation[count][0] != null && classInformation[count][0].equals(ID)){
+                break;
             }
-            //同型別的課程
-            if(storeName.contains(classInformation[i][1])){
-                System.out.println("The same type class has been selected");
-                return false;
-            }
+        }
+        if(count == 69) {
+            System.out.println("The ID is wrong");
+            return false;
+        }
+        //ID重複
+        if(storeID.contains(classInformation[count][0])){
+            System.out.println("The class has been selected");
+            return false;
+        }
+        //同型別的課程
+        if(storeName.contains(classInformation[count][1])){
+            System.out.println("The same type class has been selected");
+            return false;
         }
         return true;
     }
@@ -70,5 +78,5 @@ public class SelectClass {
             }
         }
     }
-    
+
 }

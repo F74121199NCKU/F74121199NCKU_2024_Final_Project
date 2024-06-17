@@ -35,13 +35,13 @@ public class rateClass {
                         if (score.matches("[1-5]")) {
                             int count = rateCount.getOrDefault(classInformation[i][0], 0);
                             rateCount.put(classInformation[i][0], count+1);//算次數
-    
+
                             int alreadyCountRate = rates.getOrDefault(classInformation[i][0], 0);
                             rates.put(classInformation[i][0], alreadyCountRate+Integer.parseInt(score));//算分數
                             return;
-    
+
                         }else{
-    
+
                             System.out.println("Wrong rating");
                             System.out.println("Enter 0 to exit");
                         }
@@ -51,7 +51,7 @@ public class rateClass {
                 }
             }
         }
-        
+
     }
 
     //13.計算平均輸出
@@ -107,7 +107,6 @@ public class rateClass {
 
                     String comment;
                     do{
-
                         comment = sc.nextLine();
                         if (comment.equals("0")) {
                             return;
@@ -154,6 +153,5 @@ public class rateClass {
                 }
             }
         }
-
     }
 }
